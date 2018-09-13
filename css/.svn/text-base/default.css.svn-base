@@ -1,0 +1,21 @@
+/* CSS GLOBAL RESET */
+
+div.exemplo, div.bloco { 
+	background : #f1f1f1; 
+	margin: 20px 0;
+	padding: 10px;
+}
+div.exemplo div.accordion{ padding-bottom: 140px; }
+
+
+
+div.exemplo pre, div.bloco pre { 
+	background : #ffa;
+	padding:10px;
+	font: 14px Trebushet MS;
+	overflow: auto;
+}
+
+table tr {
+	font-size: 9px;
+}

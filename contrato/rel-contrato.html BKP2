@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="../css/default.css" rel="stylesheet" type="text/css"/>
+<link href="../css/jquery.click-calendario-1.0.css" rel="stylesheet" type="text/css"/>
+
+<script language="javascript" src ="../js/jquery-1.7.2.min.js"></script>
+<script language="javascript" src="../js/jquery.click-calendario-1.0-min.js"></script>
+<script language="javascript" src="../js/rel-contrato.js"></script>
+<title>Relatório des Contratos Vigentes</title></head>
+
+<body>
+
+{MENU}
+<br />
+
+<h3>Relat&oacute;rio de Contratos Vigentes </h3>
+<form name="rel-contrato" id="rel-contrato" method="post">
+	<!-- BEGIN BLOCK_CONTROLADORIA -->
+	<select name="departamento" id="departamento">
+		<option value="">Selecione um departamento</option>
+		<option value="1">TEM! Classificados</option>
+		<option value="2">Comercial Notici&aacute;rio</option>
+		<option value="3">Comercial Web</option>
+	</select>
+	<!-- END BLOCK_CONTROLADORIA -->
+	Vig&ecirc;ncia:
+	<input type="text" name="data1" id="data1" size="10" maxlength="10" />
+	<input type="text" name="data2" id="data2" size="10" maxlength="10" /> 
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		 <input type="button" name="pesquisar" id="pesquisar" value="Pesquisar" />	
+</form>
+
+<br />
+
+<div style="font-style:oblique; color:red">
+	Obs: outras consultas, acessar m&oacute;dulo Contract Manager.
+</div>
+
+<br /><br />
+
+<div style="font-style:oblique; font-weight:bold">
+  Var1: m&eacute;trica principal de monitoramento de um contrato. Exemplo: valor bruto (R$). <br />
+  Var2: m&eacute;trica secund&aacute;ria de monitoramento de um contrato (opcional). Exemplo: n&uacute;mero de linhas.
+</div>
+
+<br /><br />
+
+<div id="resultado" >
+
+  <table width="1694" border="1"  align="center">
+    <tr>
+      <th width="181" scope="col">Contrato</th>
+      <th width="234" scope="col">Cliente</th>
+      <th width="125" scope="col">CPF/CNPJ</th>
+      <th width="83" scope="col">In&iacute;cio</th>
+      <th width="83" scope="col">Fim</th>
+      <th width="154" scope="col">Inser&ccedil;&otilde;es </th>
+      <th width="107" scope="col">Percentagem Var1 </th>
+	  <th width="94" scope="col">Var1 Real </th>
+      <th width="155" scope="col">Var1 Esperado </th>
+      <th width="110" scope="col">Resta Var1 </th>
+	  <th width="298" scope="col">Pacote</th>
+	  <!--
+	  <th width="77" scope="col">Percentagem Var2 </th>
+      <th width="77" scope="col">Var2 Real </th>
+      <th width="77" scope="col">Var2 Esperado </th>
+      <th width="77" scope="col">Resta Var2 </th>
+	  -->      
+    </tr>
+    <!-- BEGIN BLOCK_DADOS -->
+	<tr {STYLE}>
+      <td>{CONTRATO}</td>
+      <td>{CLIENTE}</td>
+      <td>{DOCUMENTO}</td>
+      <td>{DATAI}</td>
+      <td>{DATAF}</td>
+      <td style="text-align:center;">{QTDPUBLICACOES}</td>
+      <td style="text-align:center;">{PERCVAR1}%</td>
+      <td style="text-align:center;">{VAR1REAL}</td>
+      <td style="text-align:center;">{VAR1ESPERADO}</td>
+      <td style="text-align:center;">{RESTAVAR1}</td>
+      <td style="text-align:center;">{PACOTE}</td>
+	  <!--
+      <td style="text-align:center;">{PERCVAR2}%</td>
+      <td style="text-align:center;">{VAR2REAL}</td>
+      <td style="text-align:center;">{VAR2ESPERADO}</td>
+      <td style="text-align:center;">{RESTAVAR2}</td>
+	  -->
+    </tr>
+	<!-- END BLOCK_DADOS -->
+    
+	<!-- BEGIN BLOCK_VAZIO -->
+	<tr style="font-style:oblique; text-align:center;font-weight:bold;">
+      <td colspan="15">Nenhum registro encontrado</td>
+    </tr>
+	<!-- END BLOCK_VAZIO -->
+  </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<?php
+
+include_once 'C:/wamp/www/workspace/atex/conexao.php';
+include_once 'C:/wamp/www/workspace/atex/classes/phpmailer/class.phpmailer.php';
+include_once 'C:/wamp/www/workspace/atex/global.php';
+
+function converteData(&$data) {
+	$data = substr ( $data, 0, 10 );
+	list ( $ano, $mes, $dia ) = explode ( "-", $data );
+	$data = $dia . "/" . $mes . "/" . $ano;
+	return $data;
+}
+
+$sql = "
+select distinct 
+	i.[Name] 'instancia',
+    i.[Status] 'status',
+    c3.Name1 'cliente',
+    c3.FederalId 'documento',        
+    i.StartDate 'inicio',
+    i.EndDate 'fim',
+    (case when sum (f.Var1Actual) <> '' then count(*) else 0 end) 'qtdpublicacoes',
+    (
+    	case 
+        	when n.[Description] is null 
+        		then d.[Description] 
+        	else n.[Description]  
+        end
+    ) 'pacote',
+    sum (f.Var1Actual) 'var1real',
+    (
+    	case 
+        	when n.Var1LowerLimit is null 
+            	then d.Var1LowerLimit 
+            else n.Var1LowerLimit  
+        end
+    ) 'var1esperado',
+    (
+    	case 
+        	when n.Var1LowerLimit is null 
+            	then d.Var1LowerLimit-sum (f.Var1Actual) 
+            else n.Var1LowerLimit-sum (f.Var1Actual)  
+        end
+    ) 'restavar1',
+    (
+    	case 
+        	when n.Var1LowerLimit is null 
+            	then (sum (f.Var1Actual)*100)/d.Var1LowerLimit 
+        	else (sum (f.Var1Actual)*100)/n.Var1LowerLimit  
+        end
+    ) 'porcentagemvar1',
+    sum (f.Var2Actual) 'var2real',
+    (
+    	case 
+        	when n.Var2LowerLimit is null 
+            	then d.Var2LowerLimit 
+            else n.Var2LowerLimit  
+        end
+    ) 'var2esperado',
+    (
+    	case when 
+        	n.Var2LowerLimit is null 
+            	then d.Var2LowerLimit-sum (f.Var2Actual) 
+            else n.Var2LowerLimit-sum (f.Var2Actual)  
+        end
+    ) 'restavar2',
+    (
+    	case 
+        	when n.Var2LowerLimit = '' or d.Var2LowerLimit = '' 
+            	then '' 
+            else 
+            	(
+                	case 
+                    	when n.Var1LowerLimit is null 
+                        	then (sum (f.Var2Actual)*100)/d.Var2LowerLimit 
+                        else (sum (f.Var2Actual)*100)/n.Var2LowerLimit  
+                    end 
+                )           	   
+        end
+    ) 'porcentagemvar2'  
+from 
+	CoContractInstance i
+left join CoRateLevel n on (i.ContractTemplateId = n.OwnerId and i.LevelSignedUpTo = n.ContractLevel)
+left join CoDiscountLevel d on (i.ContractTemplateId = d.OwnerId and i.LevelSignedUpTo = d.ContractLevel)
+left join CoFulfillmentRec f on (i.Id = f.ContractInstanceId)
+left join CoCustomerAcctEntry c1 on (i.Id = c1.OwnerId)
+left join CustomerAccNumber c2 on (c1.PayorAcctId = c2.Id)
+left join Customer c3 on (c2.CustAccNumberAccId = c3.AccountId)
+where (
+	(i.[Status] = 2) and
+	((i.[Name] like 'TEM-%'))
+) 
+group by i.[Name], i.[Status], c3.Name1, c3.FederalId, i.StartDate, i.EndDate, n.[Description], d.[Description], n.Var1LowerLimit, d.Var1LowerLimit, n.Var2LowerLimit, d.Var2LowerLimit
+order by 
+	(
+    	case 
+        	when n.Var1LowerLimit is null 
+            	then (sum (f.Var1Actual)*100)/d.Var1LowerLimit 
+        	else (sum (f.Var1Actual)*100)/n.Var1LowerLimit  
+        end
+    ) desc, 
+    (
+    	case 
+        	when n.Var2LowerLimit = '' or d.Var2LowerLimit = '' 
+            	then '' 
+            else 
+            	(
+                	case 
+                    	when n.Var1LowerLimit is null 
+                        	then (sum (f.Var2Actual)*100)/d.Var2LowerLimit 
+                        else (sum (f.Var2Actual)*100)/n.Var2LowerLimit  
+                    end 
+                )           	   
+        end
+    )
+";
+
+$mail = new PHPMailer ();
+$mail->SetLanguage ( "br", "../classes/phpmailer/language/" );
+$mail->IsSMTP ();
+$mail->Host = HOST_EMAIL;
+$mail->SMTPAuth = true;
+$mail->Port = PORT_EMAIL;
+$mail->Username = USER_EMAIL;
+$mail->Password = PASS_EMAIL;
+$mail->From = USER_EMAIL;
+$mail->AddReplyTo ( USER_EMAIL );
+$mail->FromName = "Contract Manager";
+$mail->WordWrap = 50;
+$mail->IsHTML ( true );
+$mail->Subject = 'ATEX: gerenciamento de contratos ...';
+
+$rs = $db->Execute ( $sql );
+
+if ($rs) {
+	
+	$enviar = false;
+	
+	$conteudo = "
+	<table width='1694' border='1'  align='center'>
+    <tr>
+      <th width='181' scope='col'>Contrato</th>
+      <th width='234' scope='col'>Cliente</th>
+      <th width='125' scope='col'>CPF/CNPJ</th>
+      <th width='83' scope='col'>In&iacute;cio</th>
+      <th width='83' scope='col'>Fim</th>
+      <th width='154' scope='col'>Inser&ccedil;&otilde;es </th>
+      <th width='107' scope='col'>Percentagem Var1 </th>
+	  <th width='94' scope='col'>Var1 Real </th>
+      <th width='155' scope='col'>Var1 Esperado </th>
+      <th width='110' scope='col'>Resta Var1 </th>
+	  <th width='298' scope='col'>Pacote</th>      
+    </tr>
+	";
+	
+	while ( $o = $rs->FetchNextObject () ) {
+		$contrato = $o->INSTANCIA;
+		$cliente = utf8_encode ( $o->CLIENTE );
+		$documento = $o->DOCUMENTO;
+		$datai = converteData ( $o->INICIO );
+		$dataf = converteData ( $o->FIM );
+		$datapublicacoes = $o->QTDPUBLICACOES;
+		$percvar1 = number_format ( $o->PORCENTAGEMVAR1, 2, ',', '.' );
+		$var1real = number_format ( $o->VAR1REAL, 2, ',', '.' );
+		$var1esperado = number_format ( $o->VAR1ESPERADO, 2, ',', '.' );
+		$restavar1 = number_format ( $o->RESTAVAR1, 2, ',', '.' );
+		$pacote = utf8_encode($o->PACOTE);
+		
+		if ($o->PORCENTAGEMVAR1 >= PERCENTAGEM_LIMITE) {
+			
+			$enviar = true;
+			
+			$conteudo .= "
+				<tr>
+		      		<td>$contrato</td>
+		      		<td>$cliente</td>
+		      		<td>$documento</td>
+		      		<td>$datai</td>
+		      		<td>$dataf</td>
+		      		<td style='text-align:center;'>$datapublicacoes</td>
+		      		<td style='text-align:center;'>$percvar1%</td>
+		      		<td style='text-align:center;'>$var1real</td>
+		      		<td style='text-align:center;'>$var1esperado</td>
+		      		<td style='text-align:center;'>$restavar1</td>
+		      		<td style='text-align:center;'>$pacote</td>
+		        </tr>
+		";
+		}
+	
+	}
+}
+
+$mail->Body = utf8_decode ( $conteudo );
+
+$mail->AddAddress ( 'adeilson@diarioonline.com.br' );
+
+if ($enviar) {
+	if (! $mail->Send ()) {
+		exit ();
+	}
+} else {
+	exit ();
+}
+
+$mail->SmtpClose ();
+
+?>

@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <title>Classificados TEM! | Pesquisando Ordem</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/geral.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link rel="shortcut icon" href="img/favicon.jpg">
+</head>
+
+<body>
+    <div class="red darken-4 z-depth-1 mb20">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 center">
+                    <img src="img/logo-tem.png" class="pb20 pt20" width="200" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="frm_pesquisa" name="frm_pesquisa" method="post" action="matricial.php">
+        <div class="container">
+            <div class="row pt20">
+                <div class="col s12 m6 offset-m3 p20 radius z-depth-1">
+                    <h5 class="center m0 p10 mb20">BUSCA</h5>
+                    <div class="divider mb20"></div>
+                    <div class="row mb0">
+                        <div class="col s12">
+                            <select id="colorselector">
+                                <option value="" disabled selected>Selecione o tipo de busca</option>
+                                <option value="red">Por nº da ordem</option>
+                                <option value="yellow">Por CPF ou CNPJ</option>
+                            </select>
+                        </div>
+
+                        <div id="red" class="colors" style="display:none">
+                            <div class="col s12">
+                                <input type="text" placeholder="Informe o n&uacute;mero da ordem" name="ordem" />
+                            </div>
+                        </div>
+
+                        <div id="yellow" class="colors" style="display:none">
+                            <div class="col s12">
+                                <input type="text" placeholder="Informe o CPF ou CNPJ" name="" />
+                            </div>
+                            <p class="col s12">Selecione o período</p>
+                            <div class="col s5">
+                                <input type="date" placeholder="dd/mm/aaaa" class="datepicker">
+                            </div>
+                            <div class="col s2 center" style="line-height: 49px;">
+                                até
+                            </div>
+                            <div class="col s5">
+                                <input type="date" placeholder="dd/mm/aaaa" class="datepicker">
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                    <input class="btn btn-large red darken-4 w100" type="submit" name="pesquisar" value="Pesquisar" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/materialize.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 15, // Creates a dropdown of 15 years to control year
+                // The title label to use for the month nav buttons
+                labelMonthNext: 'Próximo Mês',
+                labelMonthPrev: 'Mês Anterior',
+                // The title label to use for the dropdown selectors
+                labelMonthSelect: 'Selecione o Mês',
+                labelYearSelect: 'Selecione o ano',
+                // Months and weekdays
+                monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                // Materialize modified
+                weekdaysLetter: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                // Today and clear
+                today: 'Hoje',
+                clear: 'Limpar',
+                close: 'Ok',
+                // The format to show on the `input` element
+                format: 'dd/mm/yyyy'
+            });
+            $('select').material_select();
+            $('#colorselector').change(function () {
+                $('.colors').hide();
+                $('#' + $(this).val()).show();
+            });
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+body {
+    margin: 0;
+    padding: 0;
+    font: 8px arial;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.logo-tem {
+    float: left;
+    width: 100px;
+    padding: 5px;
+    background: #666;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+table {
+    width: 100%;
+    display: table;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    padding: 5px 10px;
+    display: table-cell;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+
+hr {
+    margin-bottom: 15px;
+}
+
+
+/* ==========================================================================
+Estilos para impressão
+========================================================================== */
+
+@media print {
+    @page {
+        /*        size: landscape;*/
+    }
+    .no-print,
+    nav,
+    footer,
+    video,
+    audio,
+    object,
+    embed {
+        display: none;
+    }
+    .print {
+        display: block;
+    }
+    .page-break {
+        page-break-before: always;
+    }
+}

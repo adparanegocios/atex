@@ -1,0 +1,48 @@
+<table width="1694" border="1"  align="center">
+    <tr>
+      <th width="181" scope="col">Contrato</th>
+      <th width="234" scope="col">Cliente</th>
+      <th width="125" scope="col">CPF/CNPJ</th>
+      <th width="83" scope="col">In&iacute;cio</th>
+      <th width="83" scope="col">Fim</th>
+      <th width="154" scope="col">Inser&ccedil;&otilde;es </th>
+      <th width="107" scope="col">Percentagem Var1 </th>
+	  <th width="94" scope="col">Var1 Real </th>
+      <th width="155" scope="col">Var1 Esperado </th>
+      <th width="110" scope="col">Resta Var1 </th>
+	  <th width="298" scope="col">Pacote</th>
+	  <!--
+	  <th width="77" scope="col">Percentagem Var2 </th>
+      <th width="77" scope="col">Var2 Real </th>
+      <th width="77" scope="col">Var2 Esperado </th>
+      <th width="77" scope="col">Resta Var2 </th>
+	  -->      
+    </tr>
+    <!-- BEGIN BLOCK_DADOS -->
+	<tr {STYLE}>
+      <td>{CONTRATO}</td>
+      <td>{CLIENTE}</td>
+      <td>{DOCUMENTO}</td>
+      <td>{DATAI}</td>
+      <td>{DATAF}</td>
+      <td style="text-align:center;">{QTDPUBLICACOES}</td>
+      <td style="text-align:center;">{PERCVAR1}%</td>
+      <td style="text-align:center;">{VAR1REAL}</td>
+      <td style="text-align:center;">{VAR1ESPERADO}</td>
+      <td style="text-align:center;">{RESTAVAR1}</td>
+      <td style="text-align:center;">{PACOTE}</td>
+	  <!--
+      <td style="text-align:center;">{PERCVAR2}%</td>
+      <td style="text-align:center;">{VAR2REAL}</td>
+      <td style="text-align:center;">{VAR2ESPERADO}</td>
+      <td style="text-align:center;">{RESTAVAR2}</td>
+	  -->
+    </tr>
+	<!-- END BLOCK_DADOS -->
+    
+	<!-- BEGIN BLOCK_VAZIO -->
+	<tr style="font-style:oblique; text-align:center;font-weight:bold;">
+      <td colspan="15">Nenhum registro encontrado</td>
+    </tr>
+	<!-- END BLOCK_VAZIO -->
+  </table>

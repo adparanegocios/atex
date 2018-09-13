@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="../css/default.css" rel="stylesheet" type="text/css"/>
+<link href="../css/jquery.click-calendario-1.0.css" rel="stylesheet" type="text/css"/>
+
+<script language="javascript" src ="../js/jquery-1.7.2.min.js"></script>
+<script language="javascript" src="../js/jquery.click-calendario-1.0-min.js"></script>
+<script language="javascript" src="../js/rel-caixa.js"></script>
+</head>
+
+<body>
+<h3>Relat&oacute;rio de Caixa</h3>
+<form name="rel-caixa" id="rel-caixa" method="post">
+	Per&iacute;odo: <input type="text" name="data1" id="data1" size="10" maxlength="10" />
+		  <input type="text" name="data2" id="data2" size="10" maxlength="10" />
+	<select name="user" id="user">
+		<option value="">** Selecione um usu&aacute;rio **</option>
+		<!-- BEGIN BLOCK_OPTION_USER -->
+		<option value="{USERID}">{USERNAME}</option>
+		<!-- END BLOCK_OPTION_USER -->
+	</select>
+	<select name="time" id="time">
+		<option value="">** Selecione uma lota&ccedil;&atilde;o **</option>
+		<!-- BEGIN BLOCK_NOTICIARIO -->
+		<option value="-3">[ Todos Comercial Notici&aacute;rio ]</option>
+		<!-- END BLOCK_NOTICIARIO -->
+		<!-- BEGIN BLOCK_TEM -->
+		<option value="-1">[ Todos TEM! Classificados ]</option>
+		<option value="-2">[ Todas as lojas do TEM! Classificados ]</option>
+		<!-- END BLOCK_TEM -->
+		<!-- BEGIN BLOCK_OPTION_LOTACAO -->
+		<option value="{TEAMID}">{DESCRICAO}</option>
+		<!-- END BLOCK_OPTION_LOTACAO -->
+	</select>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		 <input type="button" name="pesquisar" id="pesquisar" value="Pesquisar" />	
+</form>
+
+<br />
+
+<div style="font-style:oblique; color:red">
+	Obs: se n&atilde;o for especificado um per&iacute;odo, a data considerada sempre ser&aacute; a atual
+</div>
+
+
+<br /><br />
+
+<div id="resultado" >
+
+<table width="928" border="1" align="center">
+  	<tr>
+    <th colspan="5" scope="col" style="text-align:right">{DATAHORA}</th>
+    </tr>
+  <tr>
+    <th width="217" scope="col">Vendedor</th>
+    <th width="90" scope="col">Valor em R$</th>
+    <th width="95" scope="col">Cart&atilde;o/D&eacute;bito</th>
+    <th width="154" scope="col">Compensa&ccedil;&atilde;o/Cortesia</th>
+    <th width="338" scope="col">Lota&ccedil;&atilde;o</th>
+  </tr>
+  
+  
+  <!-- BEGIN BLOCK_DADOS -->
+  <tr>
+    <td>{CAPTADOR}</td>
+    <td align="center">{DINHEIRO}</td>
+    <td align="center">{CARTAO}</td>
+    <td align="center">{GRATIS}</td>
+    <td>{LOTACAO}</td>
+  </tr>
+  <!-- END BLOCK_DADOS -->
+  
+  
+  <!-- BEGIN BLOCK_VAZIO -->
+  <tr style="font-style:oblique; text-align:center;font-weight:bold;">
+    <td colspan="5">Nenhum registro encontrado! </td>
+  </tr>
+  <!-- END BLOCK_VAZIO -->
+  
+  <tr>
+    <th scope="col">Total</th>
+    <th scope="col">{TOTALD}</th>
+    <th scope="col">{TOTALC}</th>
+    <th scope="col">{TOTALG}</th>
+    <th rowspan="2" scope="col"><p>&nbsp;</p>
+      </th>
+  </tr>
+  <tr>
+    <th scope="col">&nbsp;</th>
+    <th colspan="3" scope="col">{GERAL}</th>
+    </tr>
+</table>
+
+</div>
+
+</body>
+</html>
