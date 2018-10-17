@@ -2,35 +2,35 @@
 
 define ( 'PATH', '/' );
 
-define ( 'HOST_BANCO', '10.10.15.26' );
-define ( 'USER_BANCO', 'sa' );
-define ( 'PASS_BANCO', '3tS=e}vb' );
-define ( 'NAME_BANCO', 'Adbase-RBA' );
+define ( 'HOST_BANCO', '<SERVIDOR>' );
+define ( 'USER_BANCO', '<USUARIO>' );
+define ( 'PASS_BANCO', '<SENHA>' );
+define ( 'NAME_BANCO', '<BANCO>' );
 
-define ( 'HOST_BANCO2', '10.10.15.66' );
-define ( 'USER_BANCO2', 'sa' );
-define ( 'PASS_BANCO2', 'RBA13#' );
-define ( 'NAME_BANCO2', 'CorporeRM' );
+define ( 'HOST_BANCO2', '<SERVIDOR>' );
+define ( 'USER_BANCO2', '<USUARIO>' );
+define ( 'PASS_BANCO2', '<SENHA>' );
+define ( 'NAME_BANCO2', '<BANCO>' );
 
 //////////// TEMPORARIO /////////////////
-define ( 'HOST_BANCO3', '10.10.15.26' );
-define ( 'USER_BANCO3', 'sa' );
-define ( 'PASS_BANCO3', '3tS=e}vb' );
-define ( 'NAME_BANCO3', 'ADBASE-DEV' );
+define ( 'HOST_BANCO3', '<SERVIDOR>' );
+define ( 'USER_BANCO3', '<USUARIO>' );
+define ( 'PASS_BANCO3', '<SENHA>' );
+define ( 'NAME_BANCO3', '<BANCO>' );
 
-define ( 'HOST_BANCO4', '10.10.15.66' );
-define ( 'USER_BANCO4', 'sa' );
-define ( 'PASS_BANCO4', 'RBA13#' );
-define ( 'NAME_BANCO4', 'CONVERTIDA' );
+define ( 'HOST_BANCO4', '<SERVIDOR>' );
+define ( 'USER_BANCO4', '<USUARIO>' );
+define ( 'PASS_BANCO4', '<SENHA>' );
+define ( 'NAME_BANCO4', '<BANCO>' );
 //////////// TEMPORARIO /////////////////
 
 define( 'INICIO', 10 );
 define( 'FIM', 1000 );
 define( 'PADRAO', 40 );
 
-define ( 'HOST_EMAIL', 'mail.rbadecomunicacao.com.br' );
-define ( 'USER_EMAIL', 'adbase@rbadecomunicacao.com.br' );
-define ( 'PASS_EMAIL', 'atex2012' );
+define ( 'HOST_EMAIL', '<SERVIDOR>' );
+define ( 'USER_EMAIL', '<USUARIO>' );
+define ( 'PASS_EMAIL', '<SENHA>' );
 define ( 'PORT_EMAIL', '25' );
 define ( 'PERCENTAGEM_LIMITE', '80' );
 
